@@ -22,7 +22,7 @@ from ..errors import BrowserConnectError
 
 
 def connect_browser(option):
-    address = option.address.replace('localhost', '127.0.0.1').lstrip('htps:/')
+    address = option.address.replace('localhost', '127.0.0.1')
     browser_path = option.browser_path
 
     ip, port = address.split(':')
@@ -171,14 +171,15 @@ def test_connect(ip, port):
     s.keep_alive = False
     while perf_counter() < end_time:
         try:
-            r = s.get(f'http://{ip}:{port}/json', timeout=10, headers={'Connection': 'close'})
+            r = s.get(f'http://{ip}:{port}/json', timeout=10, headers={'Connection': 'close',"Host":"localhost"})
             for tab in r.json():
                 if tab['type'] in ('page', 'webview'):
                     r.close()
                     s.close()
                     return True
             r.close()
-        except Exception:
+        except Exception as e:
+            print(e)
             sleep(.2)
 
     s.close()

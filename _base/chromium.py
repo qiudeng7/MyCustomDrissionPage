@@ -472,7 +472,7 @@ def run_browser(chromium_options):
         s = Session()
         s.trust_env = False
         s.keep_alive = False
-        ws = s.get(f'http://{chromium_options.address}/json/version', headers={'Connection': 'close'})
+        ws = s.get(f'http://{chromium_options.address}/json/version', headers={'Connection': 'close',"Host":"localhost"})
         if not ws:
             raise BrowserConnectError(_S._lang.BROWSER_CONNECT_ERR2)
         json = ws.json()

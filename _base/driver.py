@@ -224,7 +224,7 @@ class BrowserDriver(Driver):
         s = Session()
         s.trust_env = False
         s.keep_alive = False
-        r = s.get(url, headers={'Connection': 'close'})
+        r = s.get(url, headers={'Connection': 'close',"Host":"localhost"})
         r.close()
         s.close()
         return r
